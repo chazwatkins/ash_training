@@ -6,6 +6,7 @@ defmodule Twitter.MixProject do
       app: :twitter,
       version: "0.1.0",
       elixir: "~> 1.14",
+      consolidate_protocols: false,
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -40,10 +41,11 @@ defmodule Twitter.MixProject do
       {:ash_authentication, "~> 4.0.0-rc"},
       {:ash_authentication_phoenix, "~> 2.0.0-rc"},
       {:ash_graphql, "~> 1.0.0-rc"},
-      {:ash_json_api, "~> 1.0.0-rc.1"},
+      {:ash_json_api, "~> 1.0.0-rc"},
       {:picosat_elixir, "~> 0.2"},
       {:open_api_spex, "~> 3.16"},
       {:redoc_ui_plug, "~> 0.2"},
+      {:ecto_dev_logger, "~> 0.10"},
       # Phoenix Default Dependencies
       {:phoenix, "~> 1.7.11"},
       {:phoenix_ecto, "~> 4.4"},
@@ -82,10 +84,8 @@ defmodule Twitter.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      setup: ["deps.get", "ash.setup", "assets.setup", "assets.build"],
+      test: ["ash.create --quiet", "ash.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind twitter", "esbuild twitter"],
       "assets.deploy": [

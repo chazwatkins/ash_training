@@ -8,7 +8,8 @@
     :ash_authentication,
     :ash_authentication_phoenix,
     :ash_json_api,
-    :ash_graphql
+    :ash_graphql,
+    :ash_admin
   ],
   subdirectories: ["priv/*/migrations"],
   plugins: [Phoenix.LiveView.HTMLFormatter, Spark.Formatter],

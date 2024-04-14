@@ -14,6 +14,8 @@ config :twitter, Twitter.Repo,
 
 secret_key_base = "4FLx/oKJN3hLX9TSropfXlKX9T4Y3YwGxXvuT03LiKeTw9BAGZWODQhWK+qLK+f7"
 
+config :twitter, Twitter.Repo, log: false
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -65,6 +67,7 @@ config :twitter, TwitterWeb.Endpoint,
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/twitter_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/twitter/**/*.ex$"
     ]
   ]
 

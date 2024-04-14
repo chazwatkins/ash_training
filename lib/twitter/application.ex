@@ -7,6 +7,8 @@ defmodule Twitter.Application do
 
   @impl true
   def start(_type, _args) do
+    Ecto.DevLogger.install(Twitter.Repo)
+
     children = [
       TwitterWeb.Telemetry,
       Twitter.Repo,

@@ -66,8 +66,8 @@ config :twitter, TwitterWeb.Endpoint,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/twitter_web/(controllers|live|components)/.*(ex|heex)$"
-      ~r"lib/twitter/**/*.ex$"
+      ~r"lib/twitter_web/(controllers|live|components)/.*(ex|heex)$",
+      ~r"lib/twitter/.*(ex)$"
     ]
   ]
 

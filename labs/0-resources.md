@@ -17,7 +17,7 @@
 
 3. Add `defaults [:read]` to the `actions` block.
 
-4. Run `iex -S mix`, and use functions from `Ash.Resource.Info` to see in  to see that we've defined the resource properly. (ignore the warnings presented in iex)
+4. Run `iex -S mix`, and use functions from `Ash.Resource.Info` to see that we've defined the resource properly. (ignore the warnings presented in iex)
 
 ```elixir
 iex> Ash.Resource.Info.attributes(Twitter.Tweets.Tweet)
@@ -35,7 +35,7 @@ iex> Ash.Resource.Info.actions(Twitter.Tweets.Tweet)
 
 ```elixir
 use Ash.Resource,
-  domain: Twitter.TWeets
+  domain: Twitter.Tweets
 ```
 
 7. Use functions from `Ash.Domain.Info`

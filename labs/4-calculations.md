@@ -51,7 +51,7 @@ Replace the like and unlike button actions with the following:
       <.icon name="hero-heart" />
     </button>
   <% end %>
-</:col>
+</:action>
 ```
 
 Now you can like and unlike in one click!

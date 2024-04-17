@@ -43,7 +43,7 @@ end
   <button phx-click="like" phx-value-id={tweet.id}>
     <.icon name="hero-arrow-up" />
   </button>
-</:col>
+</:action>
 ```
 
 3. Then we'll add an event handler for it. We'll also need to uncomment the `refetch_tweet` helper that we added for you at the bottom of `index.ex`

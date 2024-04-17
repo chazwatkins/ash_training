@@ -16,6 +16,12 @@ These instructions are for mac & linux. If you are on windows, we will figure it
 
 You can use the builtin terminal. Otherwise,I recommend iTerm2.
 
+### Create database
+
+`mix setup`
+
+If you don't have elixir/erlang/postgresql installed, see below.
+
 ### Installing Erlang/Elixir/Postgresql
 
 If you already have these installed, you can skip the rest of this document.

@@ -79,7 +79,7 @@ end
 
 ## Try on your own
 
-- Generate policy flow charts with `mix ash.generate_policy_charts --all`. You can add the `--format png` option, but that requires `npm install -g @mermaid-js/mermaid-cli`, which people tend to have issues with due to node versions.
+- Generate policy flow charts with `mix ash.generate_policy_charts --all`. You can add the `--format png` option, but that requires `npm install -g @mermaid-js/mermaid-cli`, which people tend to have issues with due to node versions. To view the charts otherwise, paste the mermaid code into the [Mermaid Live Editor](https://mermaid.live/edit)
 
 - Add a flag on tweets called `:private`. Add a checkbox to the UI for it. Only show private tweets to users who are the author of the tweet.
 

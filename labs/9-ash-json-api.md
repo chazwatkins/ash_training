@@ -66,7 +66,7 @@ end
 
 7. Visit `localhost:4000/api/json/tweets`. You might notice that the `attributes` key is empty. This is because we haven't marked any of our attributes is `public?`.
 
-For an API extension to show any attributes, calculations, they must be marked `public?` Add the `public true` option to the attributes on the `tweet`.
+For an API extension to show any attributes, calculations, they must be marked `public?`. Add the `public? true` option to the attributes on the `tweet`.
 
 8. You'll notice also that the `links` are empty. We can add a `get` route for to fetch a tweet.
 

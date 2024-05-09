@@ -8,7 +8,7 @@
 
 1.  We can simplify a lot of our form code using `AshPhoenix.Form`. We get error handling, automatic setting of values, and more.
 
-2. To start, we will this `assign_form/1` helper to the bottom of `form_component.ex`.
+2.  To start, we will this `assign_form/1` helper to the bottom of `form_component.ex`.
 
 ```elixir
 defp assign_form(%{assigns: %{tweet: tweet}} = socket) do
@@ -21,7 +21,7 @@ defp assign_form(%{assigns: %{tweet: tweet}} = socket) do
     else
       AshPhoenix.Form.for_create(Twitter.Tweets.Tweet, :create,
         as: "tweet",
-        actor: socket.assignscurrent_user
+        actor: socket.assigns.current_user
       )
     end
 
@@ -40,7 +40,6 @@ def update(assigns, socket) do
    |> assign_form()}
 end
 ```
-
 
 4. Now, update your `"save"` handler to use `AshPhoenix.Form.submit/2`
 
@@ -64,7 +63,6 @@ def handle_event("save", %{"tweet" => tweet_params}, socket) do
   end
 end
 ```
-
 
 5. Then, we can modify our `<.simple_form >` to use this form.
 
@@ -93,4 +91,4 @@ end
 
 7. Then we add this to our `<.simple_form` to add `phx-change="validate"`.
 
-6. Now we can try it out our tweet form, and if you violate any validations on the tweet, you will see the validation errors automatically appear as soon as you meet the error conditions.
+8. Now we can try it out our tweet form, and if you violate any validations on the tweet, you will see the validation errors automatically appear as soon as you meet the error conditions.

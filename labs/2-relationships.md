@@ -99,8 +99,7 @@ iex> Twitter.Tweets.Tweet
      |> Ash.read!()
 ```
 
-
-- Generate resource diagrams with `mix ash.generate_resource_diagrams --format png` (requires `npm install -g @mermaid-js/mermaid-cli`, if you have issues)
+- Generate resource diagrams with `mix ash.generate_resource_diagrams`. You can add the `--format png` option, but that requires `npm install -g @mermaid-js/mermaid-cli`, which people tend to have issues with due to node versions.
 
 - Show the `user.id` in the tweet list in the same way we're showing the `user.email`.
 

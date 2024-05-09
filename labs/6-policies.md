@@ -24,7 +24,6 @@ end
 
 2. Now if we load up the app, we can read tweets, but can't create. Let's add a policy allowing any user to create.
 
-
 ```elixir
 policy action(:create) do
   authorize_if always()
@@ -68,7 +67,7 @@ end
 
 6. You'll see that if you load tweets, you can no longer see the email of the user who tweeted, unless it is the current user!
 
-This is a great example of how Ash helps you apply policies *everywhere* in your app, even places that are commonly overlooked.
+This is a great example of how Ash helps you apply policies _everywhere_ in your app, even places that are commonly overlooked.
 
 7. However, this is not the UX we want, because we still want to be able to see the email of the author of a tweet. So let's add the `authorize?: false` flag to the `user_email` aggregate on tweet.
 
@@ -80,7 +79,7 @@ end
 
 ## Try on your own
 
-- Generate policy flow charts with `mix ash.generate_policy_charts --all --format png` (requires `npm install -g @mermaid-js/mermaid-cli`, if you have issues, peek at a neighbors charts)
+- Generate policy flow charts with `mix ash.generate_policy_charts --all`. You can add the `--format png` option, but that requires `npm install -g @mermaid-js/mermaid-cli`, which people tend to have issues with due to node versions.
 
 - Add a flag on tweets called `:private`. Add a checkbox to the UI for it. Only show private tweets to users who are the author of the tweet.
 

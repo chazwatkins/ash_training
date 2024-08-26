@@ -74,7 +74,10 @@ defmodule TwitterWeb.TweetLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Tweet")
-    |> assign(:tweet, Ash.get!(Twitter.Tweets.Tweet, id, actor: socket.assigns.current_user, action: :read))
+    |> assign(
+      :tweet,
+      Ash.get!(Twitter.Tweets.Tweet, id, actor: socket.assigns.current_user, action: :read)
+    )
   end
 
   defp apply_action(socket, :new, _params) do

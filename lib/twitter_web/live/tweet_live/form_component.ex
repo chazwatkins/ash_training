@@ -10,13 +10,7 @@ defmodule TwitterWeb.TweetLive.FormComponent do
         <:subtitle>Use this form to manage tweet records in your database.</:subtitle>
       </.header>
 
-      <.simple_form
-        for={%{}}
-        as={:tweet}
-        id="tweet-form"
-        phx-target={@myself}
-        phx-submit="save"
-      >
+      <.simple_form for={%{}} as={:tweet} id="tweet-form" phx-target={@myself} phx-submit="save">
         <:actions>
           <.button phx-disable-with="Saving...">Save Tweet</.button>
         </:actions>
@@ -37,10 +31,10 @@ defmodule TwitterWeb.TweetLive.FormComponent do
     result =
       if socket.assigns.tweet do
         # we're updating a tweet. Update logic goes here.
-        {:error, "Not implemented"}
+        {:error, "Update not implemented"}
       else
         # we're creating a tweet. Create logic goes here.
-        {:error, "Not implemented"}
+        {:error, "Create not implemented"}
       end
 
     case result do
@@ -55,7 +49,9 @@ defmodule TwitterWeb.TweetLive.FormComponent do
         {:noreply, socket}
 
       {:error, error} ->
-        {:noreply, put_flash(socket, :error, "Error!: #{Exception.message(error)}") |> push_patch(to: socket.assigns.patch)}
+        {:noreply,
+         put_flash(socket, :error, "Error!: #{Exception.message(error)}")
+         |> push_patch(to: socket.assigns.patch)}
     end
   end
 

@@ -2,13 +2,14 @@
 
 ## Relevant Documentation
 
-- [AshPhoenix.Form](https://hexdocs.pm/ash_phoenix/2.0.0-rc.4/AshPhoenix.Form.html)
+- [AshPhoenix.Form](https://hexdocs.pm/ash_phoenix/AshPhoenix.Form.html)
 
 ## Steps
 
-1.  We can simplify a lot of our form code using `AshPhoenix.Form`. We get error handling, automatic setting of values, and more.
+1.  We can simplify a lot of our form code using `AshPhoenix.Form`.
+    We get error handling, automatic setting of values, and more.
 
-2.  To start, we will this `assign_form/1` helper to the bottom of `form_component.ex`.
+2.  To start, we will add this `assign_form/1` helper to the bottom of `form_component.ex`.
 
 ```elixir
 defp assign_form(%{assigns: %{tweet: tweet}} = socket) do
@@ -72,6 +73,7 @@ end
   id="tweet-form"
   phx-target={@myself}
   phx-submit="save"
+  phx-change="validate"
 >
   <.input label="Text" type="textarea" field={@form[:text]} />
   <:actions>
@@ -80,7 +82,10 @@ end
 </.simple_form>
 ```
 
-6. We can now introduce a `"validate"` step, that will validate on keystroke. `AshPhoenix.Form` handles the complexity of that.
+Notice how we've added `phx-change="validate"`
+
+6. We can now add a `handle_event` function for the `"validate"` event.
+   This adds validations on keystroke, and `AshPhoenix.Form` handles the complexity of that.
 
 ```elixir
 @impl true
@@ -89,6 +94,6 @@ def handle_event("validate", %{"tweet" => tweet_params}, socket) do
 end
 ```
 
-7. Then we add this to our `<.simple_form` to add `phx-change="validate"`.
-
-8. Now we can try it out our tweet form, and if you violate any validations on the tweet, you will see the validation errors automatically appear as soon as you meet the error conditions.
+7. Now we can try it out our tweet form, and if you violate any validations on the tweet,
+   you will see the validation errors automatically appear as soon as you meet the error conditions.
+   Try writing more than the character limit.

@@ -2,8 +2,8 @@
 
 ## Relevant Documentation
 
-- [Calculations](https://hexdocs.pm/ash/3.0.0-rc.21/calculations.html)
-- [Expressions](https://hexdocs.pm/ash/3.0.0-rc.21/expressions.html)
+- [Calculations](https://hexdocs.pm/ash/calculations.html)
+- [Expressions](https://hexdocs.pm/ash/expressions.html)
 
 ## Steps
 
@@ -20,7 +20,13 @@ We will get into "how many likes does it have" in the next section on aggregates
 calculate :text_length, :integer, expr(string_length(text))
 ```
 
-2. Now we can add this to the ***beginning*** of `@tweet_loads`, and show it as its own column in the UI
+2. Now, update `@tweet_loads` in `index.ex` like so:
+
+```elixir
+@tweet_loads [:text_length, user: [:email]]
+```
+
+3. And add a column to our table to show the length
 
 ```elixir
 <:col :let={{_id, tweet}} label="Length">
@@ -28,13 +34,18 @@ calculate :text_length, :integer, expr(string_length(text))
 </:col>
 ```
 
-3. Now we want to show if the current user has liked the tweet.
+4. Now we want to show if the current user has liked the tweet.
 
 ```elixir
 calculate :liked_by_me, :boolean, expr(exists(likes, user_id == ^actor(:id)))
 ```
 
-4. Now, lets replace our like and unlike buttons with a heart icon. Add `:liked_by_me` to the ***beginning*** of `@tweet_loads`.
+5. Now, lets replace our like and unlike buttons with a heart icon.
+   Add `:liked_by_me` to `@tweet_loads`.
+
+```elixir
+@tweet_loads [:text_length, :liked_by_me, user: [:email]]
+```
 
 We will use this calculation to conditionally make the heart icon red.
 

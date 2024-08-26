@@ -2,7 +2,7 @@
 
 ## Relevant Documentation
 
-- [AshJsonApi Docs](https://hexdocs.pm/ash_json_api/1.0.0-rc.3/getting-started-with-json-api.html)
+- [AshJsonApi Docs](https://hexdocs.pm/ash_json_api/getting-started-with-json-api.html)
 
 ## Existing Setup
 
@@ -11,46 +11,13 @@
 
 ## Steps
 
-1. Add `AshJsonApi.Resource` to the extensions list of `Twitter.Tweets.Tweet`
-2. Add the `json_api` block
+1. Add `AshJsonApi.Resource` to the extensions to `Twitter.Tweets.Tweet`
 
-```elixir
-json_api do
-end
+```bash
+mix ash.patch.extend Twitter.Tweets.Tweet json_api
 ```
 
-3. Add the type
-
-```elixir
-json_api do
-  type "tweet"
-end
-```
-
-4. Add the routes block, and a base route
-
-```elixir
-json_api do
-  type "tweet"
-
-  routes do
-  end
-end
-```
-
-5. Add the base route
-
-```elixir
-json_api do
-  type "tweet"
-
-  routes do
-    base "/tweets"
-  end
-end
-```
-
-6. Add an `index` route
+2. Add an `index` route
 
 ```elixir
 json_api do

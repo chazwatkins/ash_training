@@ -58,6 +58,7 @@ asdf install
 #### Installing Postgresql
 
 ```bash
-brew install postgresql
-brew services start postgresql
+brew install postgresql@16
+brew services start postgresql@16
+createuser -s postgres
 ```

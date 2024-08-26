@@ -34,14 +34,14 @@ defmodule Twitter.MixProject do
   defp deps do
     [
       # Ash
-      {:ash, "~> 3.0.0-rc"},
-      {:ash_postgres, "~> 2.0.0-rc"},
-      {:ash_phoenix, "~> 2.0.0-rc"},
-      {:ash_admin, "~> 0.10.10-rc"},
-      {:ash_authentication, "~> 4.0.0-rc"},
-      {:ash_authentication_phoenix, "~> 2.0.0-rc"},
-      {:ash_graphql, "~> 1.0.0-rc"},
-      {:ash_json_api, "~> 1.0.0-rc"},
+      {:ash, "~> 3.0"},
+      {:ash_postgres, "~> 2.0"},
+      {:ash_phoenix, "~> 2.0"},
+      {:ash_admin, "~> 0.11"},
+      {:ash_authentication, "~> 4.0"},
+      {:ash_authentication_phoenix, "~> 2.0"},
+      {:ash_graphql, "~> 1.0"},
+      {:ash_json_api, "~> 1.0"},
       {:picosat_elixir, "~> 0.2"},
       {:open_api_spex, "~> 3.16"},
       {:redoc_ui_plug, "~> 0.2"},
@@ -67,7 +67,7 @@ defmodule Twitter.MixProject do
        depth: 1},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
-      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
@@ -85,7 +85,7 @@ defmodule Twitter.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "ash.setup", "assets.setup", "assets.build"],
-      test: ["ash.create --quiet", "ash.migrate --quiet", "test"],
+      test: ["ash.setup --quiet", "ash.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind twitter", "esbuild twitter"],
       "assets.deploy": [

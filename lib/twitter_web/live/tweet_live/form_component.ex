@@ -27,7 +27,7 @@ defmodule TwitterWeb.TweetLive.FormComponent do
   end
 
   @impl true
-  def handle_event("save", _params, socket) do
+  def handle_event("save", params, socket) do
     result =
       if socket.assigns.tweet do
         # we're updating a tweet. Update logic goes here.

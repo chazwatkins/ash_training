@@ -84,11 +84,10 @@ Twitter.Tweets.like!(tweet_id, actor: socket.assigns.current_user)
 
 9. Now lets do the same with unlike.
 
-Update and destroy interfaces accept the record or a reference to a record as the first argument.
-Because we don't want to look up the individual like that is being deleted, we just want to supply
-the `tweet_id`.
-
-We'll need to use the `require_reference?` to skip requiring providing the record or id.
+Update and destroy interfaces accept the record or a reference to a record as
+the first argument. Because we don't want to look up the individual like that is
+being deleted, we just want to supply the `tweet_id`, we'll need to use the
+`require_reference?` option to skip requiring providing the record or id.
 
 This way, the code interface will use a bulk destroy under the hood.
 

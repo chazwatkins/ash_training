@@ -105,8 +105,6 @@ socket.assigns.tweet
 
 ## Try on your own
 
-- Add created_at and updated_at timestamps to the resource. Tip: remember your mix tasks that update the underlying database!
-
 - Add another text attribute, like `:label` or `:category`, and allow it to be added in the form. Add a column for it in the index view.
 
 - Require that the `:text` attribute is not `nil`

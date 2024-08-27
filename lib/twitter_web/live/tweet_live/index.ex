@@ -101,7 +101,7 @@ defmodule TwitterWeb.TweetLive.Index do
   def handle_event("delete", %{"id" => id}, socket) do
     Twitter.Tweets.Tweet
     |> Ash.get!(id, action: :read)
-    |> Ash.Changeset.for_destroy(:destroy, %{}, actor: socket.assigns.actor)
+    |> Ash.Changeset.for_destroy(:destroy, %{}, actor: socket.assigns.current_user)
     |> Ash.destroy!()
 
     {:noreply, stream_delete(socket, :tweets, %{id: id})}

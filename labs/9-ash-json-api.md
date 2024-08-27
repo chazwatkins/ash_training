@@ -2,7 +2,7 @@
 
 ## Relevant Documentation
 
-- [AshJsonApi Docs](https://hexdocs.pm/ash_json_api/getting-started-with-json-api.html)
+- [AshJsonApi Docs](https://hexdocs.pm/ash_json_api/getting-started-with-ash-json-api.html)
 
 ## Existing Setup
 
@@ -35,7 +35,7 @@ end
 
 For an API extension to show any attributes, calculations, they must be marked `public?`. Add the `public? true` option to the attributes on the `tweet`.
 
-8. You'll notice also that the `links` are empty. We can add a `get` route for to fetch a tweet.
+8. You'll notice also that the `links` are empty. We can add a `get` route to fetch a tweet.
 
 ```elixir
 get :read, primary?: true

@@ -61,7 +61,7 @@ Notice that the code interface can take just the id of the record to delete, sim
 
 ```elixir
 def handle_event("delete", %{"id" => id}, socket) do
-  Twitter.Tweets.delete_tweet!(id)
+  Twitter.Tweets.delete_tweet!(id, actor: socket.assigns.actor)
 
   {:noreply, stream_delete(socket, :tweets, %{id: id})}
 end

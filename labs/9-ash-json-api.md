@@ -7,7 +7,6 @@
 ## Existing Setup
 
 - JSON API router created
-- Domain configured with `prefix`
 
 ## Steps
 

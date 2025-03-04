@@ -50,7 +50,7 @@ defmodule TwitterWeb.TweetLive.FormComponent do
 
       {:error, error} ->
         {:noreply,
-         put_flash(socket, :error, "Error!: #{Exception.message(error)}")
+         put_flash(socket, :error, "Error!: #{Exception.format(:error, error)}")
          |> push_patch(to: socket.assigns.patch)}
     end
   end

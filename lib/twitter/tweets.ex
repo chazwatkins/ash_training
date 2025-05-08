@@ -1,7 +1,7 @@
 defmodule Twitter.Tweets do
   @moduledoc false
   use Ash.Domain,
-    extensions: [AshJsonApi.Domain, AshAdmin.Domain]
+    extensions: [AshJsonApi.Domain, AshAdmin.Domain, AshPhoenix]
 
   admin do
     show? true

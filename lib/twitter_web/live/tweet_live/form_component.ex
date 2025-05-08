@@ -2,6 +2,8 @@ defmodule TwitterWeb.TweetLive.FormComponent do
   @moduledoc false
   use TwitterWeb, :live_component
 
+  alias Twitter.Tweets
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -11,7 +13,13 @@ defmodule TwitterWeb.TweetLive.FormComponent do
         <:subtitle>Use this form to manage tweet records in your database.</:subtitle>
       </.header>
 
-      <.simple_form for={%{}} as={:tweet} id="tweet-form" phx-target={@myself} phx-submit="save">
+      <.simple_form
+        for={@form}
+        id="tweet-form"
+        phx-target={@myself}
+        phx-submit="save"
+        phx-change="validate"
+      >
         <.input label="Text" type="textarea" name="tweet[text]" value={@tweet && @tweet.text} />
         <.input label="Label" type="text" name="tweet[label]" value={@tweet && @tweet.label} />
         <.input
@@ -30,42 +38,48 @@ defmodule TwitterWeb.TweetLive.FormComponent do
 
   @impl true
   def update(assigns, socket) do
-    {:ok, assign(socket, assigns)}
+    {:ok, socket |> assign(assigns) |> assign_form()}
   end
 
   @impl true
-  def handle_event("save", params, socket) do
-    result =
-      if socket.assigns.tweet do
-        # we're updating a tweet. Update logic goes here.
-        Twitter.Tweets.update_tweet(socket.assigns.tweet, params["tweet"] || %{},
-          actor: socket.assigns.current_user
-        )
-      else
-        # we're creating a tweet. Create logic goes here.
-        Twitter.Tweets.create_tweet(params["tweet"] || %{},
-          actor: socket.assigns.current_user
-        )
-      end
+  def handle_event("validate", %{"tweet" => tweet_params}, socket) do
+    {:noreply, assign(socket, form: AshPhoenix.Form.validate(socket.assigns.form, tweet_params))}
+  end
 
-    case result do
+  @impl true
+  def handle_event("save", %{"tweet" => tweet_params}, socket) do
+    case AshPhoenix.Form.submit(socket.assigns.form, params: tweet_params) do
       {:ok, tweet} ->
         notify_parent({:saved, tweet})
 
         socket =
           socket
-          |> put_flash(:info, "Success!")
+          |> put_flash(:info, "Tweet #{socket.assigns.form.source.type}d successfully")
           |> push_patch(to: socket.assigns.patch)
 
         {:noreply, socket}
 
-      {:error, error} ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "Error!: #{Exception.format(:error, error)}")
-         |> push_patch(to: socket.assigns.patch)}
+      {:error, form} ->
+        {:noreply, assign(socket, form: form)}
     end
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp assign_form(%{assigns: %{tweet: tweet}} = socket) do
+    form =
+      if tweet do
+        Tweets.form_to_update_tweet(tweet,
+          as: "tweet",
+          actor: socket.assigns.current_user
+        )
+      else
+        Tweets.form_to_create_tweet(
+          as: "tweet",
+          actor: socket.assigns.current_user
+        )
+      end
+
+    assign(socket, form: to_form(form))
+  end
 end

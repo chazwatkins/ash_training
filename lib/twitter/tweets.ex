@@ -14,7 +14,8 @@ defmodule Twitter.Tweets do
   resources do
     resource __MODULE__.Tweet do
       define :get_tweet, action: :read, get_by: [:id]
-      define :read_feed, action: :feed
+      define :feed
+      define :popular_tweets
       define :create_tweet, action: :create
       define :update_tweet, action: :update
       define :delete_tweet, action: :destroy

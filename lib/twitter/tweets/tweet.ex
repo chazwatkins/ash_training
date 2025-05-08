@@ -15,6 +15,10 @@ defmodule Twitter.Tweets.Tweet do
       prepare build(sort: [inserted_at: :desc])
     end
 
+    read :popular_tweets do
+      prepare build(sort: [like_count: :desc], limit: 10)
+    end
+
     create :create do
       primary? true
       accept [:text, :label, :private]

@@ -126,7 +126,7 @@ defmodule TwitterWeb.TweetLive.Index do
      stream(
        socket,
        :tweets,
-       Tweets.read_feed!(actor: socket.assigns.current_user, load: @tweet_loads)
+       Tweets.feed!(actor: socket.assigns.current_user, load: @tweet_loads)
      )}
   end
 

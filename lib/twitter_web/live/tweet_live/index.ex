@@ -85,7 +85,15 @@ defmodule TwitterWeb.TweetLive.Index do
           <.link navigate={~p"/tweets/#{tweet}"}>Show</.link>
         </div>
 
-        <.link patch={~p"/tweets/#{tweet}/edit"}>Edit</.link>
+        <%= if Twitter.Tweets.can_update_tweet?(@current_user, tweet) do %>
+          <.link patch={~p"/tweets/#{tweet}/edit"}>Edit</.link>
+        <% end %>
+      </:action>
+
+      <:action :let={{_id, tweet}}>
+        <%= if Twitter.Tweets.can_delete_tweet?(@current_user, tweet) do %>
+          <.link patch={~p"/tweets/#{tweet}/edit"}>Edit</.link>
+        <% end %>
       </:action>
 
       <:action :let={{id, tweet}}>

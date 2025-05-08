@@ -3,7 +3,8 @@ defmodule Twitter.Tweets.Tweet do
   use Ash.Resource,
     otp_app: :twitter,
     domain: Twitter.Tweets,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    authorizers: [Ash.Policy.Authorizer]
 
   alias Twitter.Tweets.Like
 
@@ -16,13 +17,13 @@ defmodule Twitter.Tweets.Tweet do
 
     create :create do
       primary? true
-      accept [:text, :label]
+      accept [:text, :label, :private]
       change relate_actor(:user)
     end
 
     update :update do
       primary? true
-      accept [:text, :label, :user_id]
+      accept [:text, :label, :user_id, :private]
     end
   end
 
@@ -35,6 +36,10 @@ defmodule Twitter.Tweets.Tweet do
 
     attribute :text, :string do
       allow_nil? false
+    end
+
+    attribute :private, :boolean do
+      default false
     end
 
     attribute :label, :string
@@ -57,6 +62,10 @@ defmodule Twitter.Tweets.Tweet do
 
     count :dislike_count, :likes do
       filter expr(type == :dislike)
+    end
+
+    first :user_email, :user, :email do
+      authorize? false
     end
   end
 
@@ -85,5 +94,28 @@ defmodule Twitter.Tweets.Tweet do
   postgres do
     table "tweets"
     repo Twitter.Repo
+  end
+
+  policies do
+    bypass expr(user.admin == true) do
+      authorize_if always()
+    end
+
+    policy expr(private == true) do
+      authorize_if relating_to_actor(:user)
+    end
+
+    policy action_type(:read) do
+      forbid_if expr(user.disabled == true)
+      authorize_if expr(private == false)
+    end
+
+    policy action(:create) do
+      authorize_if always()
+    end
+
+    policy action([:update, :destroy]) do
+      authorize_if expr(user_id == ^actor(:id))
+    end
   end
 end

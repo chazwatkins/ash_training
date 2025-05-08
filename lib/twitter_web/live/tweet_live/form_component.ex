@@ -1,4 +1,5 @@
 defmodule TwitterWeb.TweetLive.FormComponent do
+  @moduledoc false
   use TwitterWeb, :live_component
 
   @impl true
@@ -21,9 +22,7 @@ defmodule TwitterWeb.TweetLive.FormComponent do
 
   @impl true
   def update(assigns, socket) do
-    {:ok,
-     socket
-     |> assign(assigns)}
+    {:ok, assign(socket, assigns)}
   end
 
   @impl true
@@ -50,7 +49,8 @@ defmodule TwitterWeb.TweetLive.FormComponent do
 
       {:error, error} ->
         {:noreply,
-         put_flash(socket, :error, "Error!: #{Exception.format(:error, error)}")
+         socket
+         |> put_flash(:error, "Error!: #{Exception.format(:error, error)}")
          |> push_patch(to: socket.assigns.patch)}
     end
   end

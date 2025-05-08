@@ -1,4 +1,5 @@
 defmodule Twitter.Accounts do
+  @moduledoc false
   use Ash.Domain,
     extensions: [AshAdmin.Domain]
 

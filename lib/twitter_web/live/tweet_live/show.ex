@@ -1,4 +1,5 @@
 defmodule TwitterWeb.TweetLive.Show do
+  @moduledoc false
   use TwitterWeb, :live_view
 
   @impl true

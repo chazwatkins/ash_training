@@ -12,6 +12,6 @@
     :ash_admin
   ],
   subdirectories: ["priv/*/migrations"],
-  plugins: [Phoenix.LiveView.HTMLFormatter, Spark.Formatter],
+  plugins: [Phoenix.LiveView.HTMLFormatter, Spark.Formatter, Styler],
   inputs: ["*.{heex,ex,exs}", "{config,lib,test}/**/*.{heex,ex,exs}", "priv/*/seeds.exs"]
 ]

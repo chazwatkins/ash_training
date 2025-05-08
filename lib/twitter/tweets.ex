@@ -1,4 +1,5 @@
 defmodule Twitter.Tweets do
+  @moduledoc false
   use Ash.Domain,
     extensions: [AshJsonApi.Domain, AshAdmin.Domain]
 
@@ -11,5 +12,6 @@ defmodule Twitter.Tweets do
   end
 
   resources do
+    resource Twitter.Tweets.Tweet
   end
 end

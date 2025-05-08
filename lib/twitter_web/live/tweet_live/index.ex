@@ -1,5 +1,8 @@
 defmodule TwitterWeb.TweetLive.Index do
+  @moduledoc false
   use TwitterWeb, :live_view
+
+  alias Twitter.Tweets.Tweet
 
   @impl true
   def render(assigns) do
@@ -58,12 +61,7 @@ defmodule TwitterWeb.TweetLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok,
-     socket
-     |> stream(
-       :tweets,
-       Ash.read!(Twitter.Tweets.Tweet, actor: socket.assigns.current_user, action: :read)
-     )}
+    {:ok, stream(socket, :tweets, Ash.read!(Tweet, actor: socket.assigns.current_user, action: :read))}
   end
 
   @impl true
@@ -76,7 +74,7 @@ defmodule TwitterWeb.TweetLive.Index do
     |> assign(:page_title, "Edit Tweet")
     |> assign(
       :tweet,
-      Ash.get!(Twitter.Tweets.Tweet, id, actor: socket.assigns.current_user, action: :read)
+      Ash.get!(Tweet, id, actor: socket.assigns.current_user, action: :read)
     )
   end
 
@@ -99,7 +97,7 @@ defmodule TwitterWeb.TweetLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    Twitter.Tweets.Tweet
+    Tweet
     |> Ash.get!(id, action: :read)
     |> Ash.Changeset.for_destroy(:destroy, %{}, actor: socket.assigns.current_user)
     |> Ash.destroy!()

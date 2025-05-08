@@ -1,4 +1,5 @@
 defmodule Twitter.Accounts.User do
+  @moduledoc false
   use Ash.Resource,
     data_layer: AshPostgres.DataLayer,
     extensions: [AshAuthentication, AshAdmin.Resource],

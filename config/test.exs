@@ -2,6 +2,18 @@ import Config
 
 config :ash, :policies, show_policy_breakdowns?: true
 
+# Print only warnings and errors during test
+config :logger, level: :warning
+
+# Initialize plugs at runtime for faster test compilation
+config :phoenix, :plug_init_mode, :runtime
+
+# Disable swoosh api client as it is only required for production adapters.
+config :swoosh, :api_client, false
+
+# In test we don't send emails.
+config :twitter, Twitter.Mailer, adapter: Swoosh.Adapters.Test
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -21,15 +33,3 @@ config :twitter, TwitterWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "RV1sFxpS+HKrCfrcf3ga+g7M5BtUrFkuFpn1qES7P0gr3pQ7lABjaAdE2fF+neT/",
   server: false
-
-# In test we don't send emails.
-config :twitter, Twitter.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters.
-config :swoosh, :api_client, false
-
-# Print only warnings and errors during test
-config :logger, level: :warning
-
-# Initialize plugs at runtime for faster test compilation
-config :phoenix, :plug_init_mode, :runtime

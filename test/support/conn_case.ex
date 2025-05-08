@@ -19,15 +19,14 @@ defmodule TwitterWeb.ConnCase do
 
   using do
     quote do
+      use TwitterWeb, :verified_routes
+      import Phoenix.ConnTest
+      import Plug.Conn
+      import TwitterWeb.ConnCase
       # The default endpoint for testing
       @endpoint TwitterWeb.Endpoint
 
-      use TwitterWeb, :verified_routes
-
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
-      import TwitterWeb.ConnCase
     end
   end
 

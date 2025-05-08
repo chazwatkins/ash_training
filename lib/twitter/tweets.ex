@@ -9,6 +9,14 @@ defmodule Twitter.Tweets do
 
   json_api do
     prefix "/api/json"
+
+    routes do
+      base_route "/tweets", Twitter.Tweets.Tweet do
+        index :feed
+
+        get :read, primary?: true
+      end
+    end
   end
 
   resources do

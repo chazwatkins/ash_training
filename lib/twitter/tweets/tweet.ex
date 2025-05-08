@@ -4,7 +4,8 @@ defmodule Twitter.Tweets.Tweet do
     otp_app: :twitter,
     domain: Twitter.Tweets,
     data_layer: AshPostgres.DataLayer,
-    authorizers: [Ash.Policy.Authorizer]
+    authorizers: [Ash.Policy.Authorizer],
+    extensions: [AshJsonApi.Resource]
 
   alias Twitter.Tweets.Like
 
@@ -40,13 +41,14 @@ defmodule Twitter.Tweets.Tweet do
 
     attribute :text, :string do
       allow_nil? false
+      public? true
     end
 
     attribute :private, :boolean do
       default false
     end
 
-    attribute :label, :string
+    attribute :label, :string, public?: true
 
     timestamps()
   end
@@ -62,10 +64,12 @@ defmodule Twitter.Tweets.Tweet do
   aggregates do
     count :like_count, :likes do
       filter expr(type == :like)
+      public? true
     end
 
     count :dislike_count, :likes do
       filter expr(type == :dislike)
+      public? true
     end
 
     first :user_email, :user, :email do
@@ -121,5 +125,9 @@ defmodule Twitter.Tweets.Tweet do
     policy action([:update, :destroy]) do
       authorize_if expr(user_id == ^actor(:id))
     end
+  end
+
+  json_api do
+    type "tweet"
   end
 end

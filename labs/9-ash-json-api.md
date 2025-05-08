@@ -16,25 +16,34 @@
 mix ash.patch.extend Twitter.Tweets.Tweet json_api
 ```
 
-2. Add an `index` route
+2. Add the json api type to the resource
 
 ```elixir
 json_api do
   type "tweet"
+end
+```
 
+3. Add the extension and an index route to the `Twitter.Tweets` domain
+
+```elixir
+  use Ash.Domain,
+    extensions: [AshJsonApi.Domain]
+
+json_api do
   routes do
-    base "/tweets"
-
-    index :feed
+    base_route "/tweets", Twitter.Tweets.Tweet do
+      index :feed
+    end
   end
 end
 ```
 
-7. Visit `localhost:4000/api/json/tweets`. You might notice that the `attributes` key is empty. This is because we haven't marked any of our attributes is `public?`.
+4. Visit `localhost:4000/api/json/tweets`. You might notice that the `attributes` key is empty. This is because we haven't marked any of our attributes is `public?`.
 
 For an API extension to show any attributes, calculations, they must be marked `public?`. Add the `public? true` option to the attributes on the `tweet`.
 
-8. You'll notice also that the `links` are empty. We can add a `get` route to fetch a tweet.
+5. You'll notice also that the `links` are empty. We can add a `get` route to fetch a tweet.
 
 ```elixir
 get :read, primary?: true

@@ -23,14 +23,24 @@ mix ash.patch.extend Twitter.Tweets.Tweet graphql
 ```elixir
 graphql do
   type :tweet
+end
+```
 
+4. Add the extension and a `query` to the `Twitter.Tweets`.
+
+```elixir
+use Ash.Domain,
+  extension: [AshGraphql.Domain]
+
+graphql do
   queries do
     list :feed, :feed
+    list Twitter.Tweets.Tweet, :feed, :feed
   end
 end
 ```
 
-Go to `localhost:4000/api/gql/playground`, and try the following query.
+5. Go to `localhost:4000/api/gql/playground`, and try the following query.
 Make sure that all fields referenced below have been made `public? true`.
 
 ```graphql

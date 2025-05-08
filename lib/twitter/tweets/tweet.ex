@@ -5,6 +5,8 @@ defmodule Twitter.Tweets.Tweet do
     domain: Twitter.Tweets,
     data_layer: AshPostgres.DataLayer
 
+  alias Twitter.Tweets.Like
+
   actions do
     defaults [:read, :destroy]
 
@@ -35,6 +37,18 @@ defmodule Twitter.Tweets.Tweet do
   relationships do
     belongs_to :user, Twitter.Accounts.User do
       allow_nil? false
+    end
+
+    has_many :likes, Like
+  end
+
+  aggregates do
+    count :like_count, :likes do
+      filter expr(type == :like)
+    end
+
+    count :dislike_count, :likes do
+      filter expr(type == :dislike)
     end
   end
 

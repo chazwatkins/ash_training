@@ -12,12 +12,17 @@ defmodule Twitter.Tweets do
   end
 
   resources do
-    resource Twitter.Tweets.Tweet do
+    resource __MODULE__.Tweet do
       define :get_tweet, action: :read, get_by: [:id]
       define :list_tweets, action: :read
       define :create_tweet, action: :create
       define :update_tweet, action: :update
       define :delete_tweet, action: :destroy
+    end
+
+    resource __MODULE__.Like do
+      define :like_tweet, action: :like, args: [:tweet_id]
+      define :dislike_tweet, action: :dislike, args: [:tweet_id]
     end
   end
 end

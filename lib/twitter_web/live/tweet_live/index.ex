@@ -2,7 +2,9 @@ defmodule TwitterWeb.TweetLive.Index do
   @moduledoc false
   use TwitterWeb, :live_view
 
-  alias Twitter.Tweets.Tweet
+  alias Twitter.Tweets
+
+  @tweet_loads [user: [:email]]
 
   @impl true
   def render(assigns) do
@@ -25,6 +27,22 @@ defmodule TwitterWeb.TweetLive.Index do
         <span class="max-w-24 text-wrap">
           <%= tweet.id %>
         </span>
+      </:col>
+
+      <:col :let={{_id, tweet}} label="Text">
+        <%= tweet.text %>
+      </:col>
+
+      <:col :let={{_id, tweet}} label="Label">
+        <%= tweet.label %>
+      </:col>
+
+      <:col :let={{_id, tweet}} label="User Email">
+        <%= tweet.user.email %>
+      </:col>
+
+      <:col :let={{_id, tweet}} label="User Id">
+        <%= tweet.user.id %>
       </:col>
 
       <:action :let={{_id, tweet}}>
@@ -62,7 +80,11 @@ defmodule TwitterWeb.TweetLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
-     stream(socket, :tweets, Ash.read!(Tweet, actor: socket.assigns.current_user, action: :read))}
+     stream(
+       socket,
+       :tweets,
+       Tweets.list_tweets!(actor: socket.assigns.current_user, load: @tweet_loads)
+     )}
   end
 
   @impl true
@@ -75,7 +97,7 @@ defmodule TwitterWeb.TweetLive.Index do
     |> assign(:page_title, "Edit Tweet")
     |> assign(
       :tweet,
-      Ash.get!(Tweet, id, actor: socket.assigns.current_user, action: :read)
+      Tweets.get_tweet!(id, actor: socket.assigns.current_user, load: @tweet_loads)
     )
   end
 
@@ -93,15 +115,15 @@ defmodule TwitterWeb.TweetLive.Index do
 
   @impl true
   def handle_info({TwitterWeb.TweetLive.FormComponent, {:saved, tweet}}, socket) do
+    tweet = Ash.load!(tweet, @tweet_loads, actor: socket.assigns.current_user)
     {:noreply, stream_insert(socket, :tweets, tweet)}
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    Tweet
-    |> Ash.get!(id, action: :read)
-    |> Ash.Changeset.for_destroy(:destroy, %{}, actor: socket.assigns.current_user)
-    |> Ash.destroy!()
+    id
+    |> Tweets.get_tweet!(actor: socket.assigns.current_user)
+    |> Tweets.delete_tweet!(actor: socket.assigns.current_user)
 
     {:noreply, stream_delete(socket, :tweets, %{id: id})}
   end

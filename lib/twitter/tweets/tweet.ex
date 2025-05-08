@@ -7,6 +7,17 @@ defmodule Twitter.Tweets.Tweet do
 
   actions do
     defaults [:read, :destroy]
+
+    create :create do
+      primary? true
+      accept [:text, :label]
+      change relate_actor(:user)
+    end
+
+    update :update do
+      primary? true
+      accept [:text, :label, :user_id]
+    end
   end
 
   attributes do
@@ -16,7 +27,15 @@ defmodule Twitter.Tweets.Tweet do
       allow_nil? false
     end
 
+    attribute :label, :string
+
     timestamps()
+  end
+
+  relationships do
+    belongs_to :user, Twitter.Accounts.User do
+      allow_nil? false
+    end
   end
 
   postgres do

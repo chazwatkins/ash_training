@@ -12,6 +12,8 @@ defmodule TwitterWeb.TweetLive.FormComponent do
       </.header>
 
       <.simple_form for={%{}} as={:tweet} id="tweet-form" phx-target={@myself} phx-submit="save">
+        <.input label="Text" type="textarea" name="tweet[text]" value={@tweet && @tweet.text} />
+        <.input label="Label" type="text" name="tweet[label]" value={@tweet && @tweet.label} />
         <:actions>
           <.button phx-disable-with="Saving...">Save Tweet</.button>
         </:actions>
@@ -30,10 +32,14 @@ defmodule TwitterWeb.TweetLive.FormComponent do
     result =
       if socket.assigns.tweet do
         # we're updating a tweet. Update logic goes here.
-        {:error, "Update not implemented"}
+        Twitter.Tweets.update_tweet(socket.assigns.tweet, params["tweet"] || %{},
+          actor: socket.assigns.current_user
+        )
       else
         # we're creating a tweet. Create logic goes here.
-        {:error, "Create not implemented"}
+        Twitter.Tweets.create_tweet(params["tweet"] || %{},
+          actor: socket.assigns.current_user
+        )
       end
 
     case result do

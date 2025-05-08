@@ -54,13 +54,17 @@ defmodule TwitterWeb.TweetLive.Index do
       </:col>
 
       <:action :let={{_id, tweet}}>
-        <.button phx-click="like" phx-value-id={tweet.id}>
-          <.icon name="hero-hand-thumbs-up" /> Like
-        </.button>
+        <button phx-click="like" phx-value-id={tweet.id}>
+          <.icon name="hero-hand-thumb-up" />
+        </button>
 
-        <.button phx-click="dislike" phx-value-id={tweet.id}>
-          <.icon name="hero-hand-thumbs-down" /> Dislike
-        </.button>
+        <button phx-click="unlike" phx-value-id={tweet.id}>
+          <.icon name="hero-x-circle" />
+        </button>
+
+        <button phx-click="dislike" phx-value-id={tweet.id}>
+          <.icon name="hero-hand-thumb-down" />
+        </button>
 
         <div class="sr-only">
           <.link navigate={~p"/tweets/#{tweet}"}>Show</.link>
@@ -99,7 +103,7 @@ defmodule TwitterWeb.TweetLive.Index do
      stream(
        socket,
        :tweets,
-       Tweets.list_tweets!(actor: socket.assigns.current_user, load: @tweet_loads)
+       Tweets.read_feed!(actor: socket.assigns.current_user, load: @tweet_loads)
      )}
   end
 
@@ -154,6 +158,13 @@ defmodule TwitterWeb.TweetLive.Index do
   @impl true
   def handle_event("dislike", %{"id" => id}, socket) do
     Tweets.dislike_tweet!(id, actor: socket.assigns.current_user)
+
+    {:noreply, refetch_tweet(socket, id)}
+  end
+
+  @impl true
+  def handle_event("unlike", %{"id" => id}, socket) do
+    Tweets.unlike_tweet!(id, actor: socket.assigns.current_user)
 
     {:noreply, refetch_tweet(socket, id)}
   end

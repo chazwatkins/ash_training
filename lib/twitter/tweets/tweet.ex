@@ -10,6 +10,10 @@ defmodule Twitter.Tweets.Tweet do
   actions do
     defaults [:read, :destroy]
 
+    read :feed do
+      prepare build(sort: [inserted_at: :desc])
+    end
+
     create :create do
       primary? true
       accept [:text, :label]
@@ -20,6 +24,10 @@ defmodule Twitter.Tweets.Tweet do
       primary? true
       accept [:text, :label, :user_id]
     end
+  end
+
+  validations do
+    validate string_length(:text, max: 255)
   end
 
   attributes do

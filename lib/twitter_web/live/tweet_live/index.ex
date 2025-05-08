@@ -4,7 +4,14 @@ defmodule TwitterWeb.TweetLive.Index do
 
   alias Twitter.Tweets
 
-  @tweet_loads [:like_count, :dislike_count, user: [:email]]
+  @tweet_loads [
+    :like_count,
+    :liked_by_me,
+    :disliked_by_me,
+    :dislike_count,
+    :text_length,
+    user: [:email]
+  ]
 
   @impl true
   def render(assigns) do
@@ -37,6 +44,10 @@ defmodule TwitterWeb.TweetLive.Index do
         <%= tweet.label %>
       </:col>
 
+      <:col :let={{_id, tweet}} label="Length">
+        <%= tweet.text_length %>
+      </:col>
+
       <:col :let={{_id, tweet}} label="User Email">
         <%= tweet.user.email %>
       </:col>
@@ -45,26 +56,30 @@ defmodule TwitterWeb.TweetLive.Index do
         <%= tweet.user.id %>
       </:col>
 
-      <:col :let={{_id, tweet}} label="Likes">
-        <%= tweet.like_count %>
-      </:col>
-
-      <:col :let={{_id, tweet}} label="Dislikes">
-        <%= tweet.dislike_count %>
-      </:col>
-
       <:action :let={{_id, tweet}}>
-        <button phx-click="like" phx-value-id={tweet.id}>
-          <.icon name="hero-hand-thumb-up" />
-        </button>
+        <%= if tweet.liked_by_me do %>
+          <button phx-click="unlike" phx-value-id={tweet.id}>
+            <.icon name="hero-hand-thumb-up-solid" />
+          </button>
+        <% else %>
+          <button phx-click="like" phx-value-id={tweet.id}>
+            <.icon name="hero-hand-thumb-up" />
+          </button>
+        <% end %>
 
-        <button phx-click="unlike" phx-value-id={tweet.id}>
-          <.icon name="hero-x-circle" />
-        </button>
+        <%= tweet.like_count %>
 
-        <button phx-click="dislike" phx-value-id={tweet.id}>
-          <.icon name="hero-hand-thumb-down" />
-        </button>
+        <%= if tweet.disliked_by_me do %>
+          <button phx-click="unlike" phx-value-id={tweet.id}>
+            <.icon name="hero-hand-thumb-down-solid" />
+          </button>
+        <% else %>
+          <button phx-click="dislike" phx-value-id={tweet.id}>
+            <.icon name="hero-hand-thumb-down" />
+          </button>
+        <% end %>
+
+        <%= tweet.dislike_count %>
 
         <div class="sr-only">
           <.link navigate={~p"/tweets/#{tweet}"}>Show</.link>

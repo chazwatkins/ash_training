@@ -61,7 +61,8 @@ defmodule TwitterWeb.TweetLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :tweets, Ash.read!(Tweet, actor: socket.assigns.current_user, action: :read))}
+    {:ok,
+     stream(socket, :tweets, Ash.read!(Tweet, actor: socket.assigns.current_user, action: :read))}
   end
 
   @impl true

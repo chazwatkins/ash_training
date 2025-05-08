@@ -1,6 +1,9 @@
 defmodule Twitter.Tweets.Tweet do
   @moduledoc false
-  use Ash.Resource, otp_app: :twitter, domain: Twitter.Tweets, data_layer: AshPostgres.DataLayer
+  use Ash.Resource,
+    otp_app: :twitter,
+    domain: Twitter.Tweets,
+    data_layer: AshPostgres.DataLayer
 
   actions do
     defaults [:read, :destroy]

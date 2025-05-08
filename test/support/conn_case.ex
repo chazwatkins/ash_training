@@ -20,6 +20,7 @@ defmodule TwitterWeb.ConnCase do
   using do
     quote do
       use TwitterWeb, :verified_routes
+
       import Phoenix.ConnTest
       import Plug.Conn
       import TwitterWeb.ConnCase
